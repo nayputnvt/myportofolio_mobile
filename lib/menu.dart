@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-// model data sederhana untuk merepresentasikan tombol menu
+// model data item menu dengan tambahan atribut warna (color)
 class ItemHomepage {
   final String name;
   final IconData icon;
+  final Color color;
 
-  ItemHomepage(this.name, this.icon);
+  ItemHomepage(this.name, this.icon, this.color);
 }
 
-// widget reusable untuk menampilkan kartu informasi pemilik (NPM, Name, Class)
+// widget reusable untuk kartu informasi pemilik portofolio
 class InfoCard extends StatelessWidget {
   final String title;
   final String content;
@@ -37,7 +38,7 @@ class InfoCard extends StatelessWidget {
   }
 }
 
-// widget reusable untuk kartu tombol menu interaktif dengan SnackBar
+// widget reusable untuk kartu tombol aksi dengan warna dinamis per item
 class ItemCard extends StatelessWidget {
   final ItemHomepage item;
 
@@ -46,11 +47,12 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.secondary,
+      // menggunakan warna unik dari masing masing item tombol
+      color: item.color,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: () {
-          // menampilkan SnackBar saat tombol ditekan
+          // menampilkan notifikasi snackbar saat tombol diklik
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
@@ -83,18 +85,19 @@ class ItemCard extends StatelessWidget {
   }
 }
 
-// halaman utama portofolio
+// halaman utama portofolio dengan identitas asli pemilik
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
+  
+  final String npm = '2506657182';
+  final String nama = 'Nayla Putri Novita';
+  final String kelas = 'PBP A';
 
-  final String npm = "2506657182";
-  final String nama = "Nayla Putri Novita";
-  final String kelas = "PBP A";
-
+  // daftar tombol aksi dengan warna latar belakang yang berbeda dan kontras
   final List<ItemHomepage> items = [
-    ItemHomepage("Lihat Proyek", Icons.folder),
-    ItemHomepage("Tambah Proyek", Icons.add_circle),
-    ItemHomepage("Logout", Icons.logout),
+    ItemHomepage("Lihat Proyek", Icons.folder, Colors.blue.shade700),
+    ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.green.shade700),
+    ItemHomepage("Logout", Icons.logout, Colors.red.shade700),
   ];
 
   @override
@@ -115,7 +118,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // baris horizontal untuk menampilkan 3 InfoCard sejajar
+            // baris horizontal untuk 3 infocard identitas pemilik
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -138,7 +141,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // gridView untuk menampilkan 3 kartu tombol
+                  // gridview menampilkan kartu tombol 3 kolom
                   GridView.count(
                     primary: true,
                     padding: const EdgeInsets.all(20),
