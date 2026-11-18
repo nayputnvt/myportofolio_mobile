@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:myportofolio_mobile/widgets/left_drawer.dart';
+import 'package:myportofolio_mobile/widgets/project_card.dart';
 
-// model data item menu dengan tambahan atribut warna (color)
+// model data item menu dengan tambahan atribut warna
 class ItemHomepage {
   final String name;
   final IconData icon;
@@ -9,7 +11,7 @@ class ItemHomepage {
   ItemHomepage(this.name, this.icon, this.color);
 }
 
-// widget reusable untuk kartu informasi pemilik portofolio
+// widget reusable untuk kartu informasi identitas pemilik portofolio
 class InfoCard extends StatelessWidget {
   final String title;
   final String content;
@@ -38,62 +40,16 @@ class InfoCard extends StatelessWidget {
   }
 }
 
-// widget reusable untuk kartu tombol aksi dengan warna dinamis per item
-class ItemCard extends StatelessWidget {
-  final ItemHomepage item;
-
-  const ItemCard(this.item, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      // menggunakan warna unik dari masing masing item tombol
-      color: item.color,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: () {
-          // menampilkan notifikasi snackbar saat tombol diklik
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!")),
-            );
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// halaman utama portofolio dengan identitas asli pemilik
+// halaman utama portofolio
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
-  
+
+  // data identitas pemilik portofolio
   final String npm = '2506657182';
   final String nama = 'Nayla Putri Novita';
   final String kelas = 'PBP A';
 
-  // daftar tombol aksi dengan warna latar belakang yang berbeda dan kontras
+  // daftar tombol menu aksi dengan warna unik masing masing
   final List<ItemHomepage> items = [
     ItemHomepage("Lihat Proyek", Icons.folder, Colors.blue.shade700),
     ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.green.shade700),
@@ -112,13 +68,16 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
+      // memasang menu drawer navigasi samping di halaman utama
+      drawer: const LeftDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // baris horizontal untuk 3 infocard identitas pemilik
+            // baris kartu identitas pemilik portofolio
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -141,7 +100,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // gridview menampilkan kartu tombol 3 kolom
+                  // petak kisi 3 kolom untuk menampilkan kartu tombol
                   GridView.count(
                     primary: true,
                     padding: const EdgeInsets.all(20),
