@@ -11,5 +11,6 @@ void main() {
     expect(find.text('NPM'), findsOneWidget);
     expect(find.text('Name'), findsOneWidget);
     expect(find.text('Class'), findsOneWidget);
+    expect(find.text('Tambah Pengalaman'), findsOneWidget);
   });
 }
