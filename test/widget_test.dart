@@ -4,7 +4,7 @@ import 'package:myportofolio_mobile/main.dart';
 void main() {
   testWidgets('MyPortfolio home page smoke test', (WidgetTester tester) async {
     // bangun widget myapp
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp());
 
     // verifikasi bahwa judul myportfolio dan info profil tampil
     expect(find.text('MyPortfolio'), findsOneWidget);

@@ -35,10 +35,7 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
       appBar: AppBar(
         title: const Text(
           'Add Experience Form',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -171,7 +168,9 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: const Text('Pengalaman berhasil ditambahkan!'),
+                            title: const Text(
+                              'Pengalaman berhasil ditambahkan!',
+                            ),
                             content: SingleChildScrollView(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
